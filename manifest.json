@@ -1,0 +1,14 @@
+{
+    "name": "LynkIt",
+    "version": "1.0",
+    "description": "Get page links in a region",
+    "permissions": ["storage"],
+    "background": {
+        "scripts": [
+            "background.js",
+            "content.js"
+        ],
+        "persistent": false
+    },
+    "manifest_version": 2
+}
