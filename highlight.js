@@ -71,6 +71,17 @@ mhNewPointer.id = 'mouse';
 mhStyleMouseHighlight();
 document.getElementsByTagName('body')[0].appendChild(mhNewPointer);
 
+var elements=[];
+$(document).ready(function(){
+    $('*').each(function () {
+        if (!$(this).is(":visible")) return;    
+        if ($(this).is("a")) { 
+            elements.push(this)        
+        }
+    });
+    // console.log(elements)  
+})
+
 /* Move the div to the mouse */
 function mhHandleMouseMove(event) {
     X = event.pageX;
@@ -109,22 +120,25 @@ function inCircle(A,B, point) {
 }
 
 function printLinks(X,Y) {
-    
-    $('*').each(function () {
-        if (!$(this).is(":visible")) return;    
-        var o = $(this).offset(),
+    // TODO : optimise this! this makes it very slow since were calculating it every time.
+    jQuery.each(elements,function (index,item) {
+        if (!$(item).is(":visible")) return;    
+        var o = $(item).offset(),
             x = o.left,
             y = o.top,
-            w = $(this).width(),
-            h = $(this).height();
+            w = $(item).width(),
+            h = $(item).height();
         var topLeft = [x,y]
         var topRight = [x+w,y]
         var bottomLeft = [x,y+h]
         var bottomRight = [x+w, y+h]
-        if ($(this).is("a")) { 
+        if ($(item).is("a")) { 
             partInCircle =  inCircle(X,Y,topLeft) || inCircle(X,Y,topRight) || inCircle(X,Y,bottomLeft) || inCircle(X,Y,bottomRight)
             // console.log(this, "left:",x, "right",x + w,"top", y, "bottom",y + h);
-            console.log(this, "in circle:", partInCircle)
+            if(partInCircle){
+                console.log($(item).text(), "in circle:", partInCircle)
+                console.log("------")
+            }
         }
     });    
 }
