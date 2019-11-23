@@ -1,14 +1,17 @@
 {
-    "name": "LynkIt",
-    "version": "1.0",
-    "description": "Get page links in a region",
-    "permissions": ["storage"],
-    "background": {
-        "scripts": [
-            "background.js",
-            "content.js"
-        ],
-        "persistent": false
+    "background": {"scripts": ["background.js"]},
+    "browser_action": {
+        "default_icon": "icon.png",
+        "default_title": "LynkIt"
     },
+    "name": "LynkIt",
+    "description": "LynkIt.",
+    "permissions": [
+        "tabs",
+        "http://*/*",
+        "https://*/*",
+        "storage"
+    ],
+    "version": "16.11.24",
     "manifest_version": 2
 }
