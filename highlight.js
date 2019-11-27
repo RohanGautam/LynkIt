@@ -90,20 +90,42 @@ function addTextToLinkViewer(text_str) {
     linkViewer.appendChild(container);
 }
 
-function getCoordsToCheck(x, y, w, h) {
+function getCoordsToCheck(x, y, width, height) {
+    var threshold = circleDiameter;
     // basic points to check
     var topLeft = [x,y];
-    var topRight = [x+w,y];
-    var bottomLeft = [x,y+h];
-    var bottomRight = [x+w, y+h];
+    var topRight = [x+width,y];
+    var bottomLeft = [x,y+height];
+    var bottomRight = [x+width, y+height];
     coords = [topLeft, topRight, bottomLeft, bottomRight];
+
+    if (width > threshold){
+        //we need to add more points to check. We need only as many more points as the circle can cover in one time. 
+        var extraPtsNeeded = Math.floor(width/circleDiameter);
+        for (var i = 0; i<extraPtsNeeded; i+=1){
+            //add points along the width, both top and bottom
+            coords.push([x + circleDiameter*(i+1), y]);
+            coords.push([x + circleDiameter*(i+1), y+height]);
+        }
+    }
+
+    if (height > threshold){
+        //we need to add more points to check. We need only as many more points as the circle can cover in one time. 
+        var extraPtsNeeded = Math.floor(height/circleDiameter);
+        for (var i = 0; i<extraPtsNeeded; i+=1){
+            //add points along the height, both left and right
+            coords.push([x, y + circleDiameter*(i+1)]);
+            coords.push([x+width, y + circleDiameter*(i+1)]);
+        }
+    }
+
     return coords;
 }
 
 function coordsInCircle(X, Y, coords) {
     for (var  i = 0; i< coords.length; i+=1){
         coord = coords[i];
-        // if any point is in the circle:
+        // if any point is in the circle, return true
         if(inCircle(X,Y,coord)==true){
             return true;
         }
