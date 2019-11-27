@@ -34,13 +34,11 @@ function mhHandleMouseMove(event) {
     Y = event.pageY;
     newX = X - circleRadius;
     newY = Y - circleRadius;
-    // console.log("X: "+newX+" Y:"+newX)
     mhNewPointer.style.left = newX + 'px';
     mhNewPointer.style.top = newY + 'px';
     // for the link viewer:
     newX = X + circleRadius;
     newY = Y + circleRadius;
-    // console.log("X: "+newX+" Y:"+newX)
     linkViewer.style.left = newX + 'px';
     linkViewer.style.top = newY + 'px';
 
@@ -72,6 +70,26 @@ function linkViewerStyling() {
     linkViewer.style.pointerEvents = 'none';
 }
 
+function clearLinkViewerNodes() {
+    // remove all children from link viewer
+    while (linkViewer.firstChild) {
+        linkViewer.removeChild(linkViewer.firstChild);
+    }
+}
+
+function addTextToLinkViewer(text_str) {
+    // create a textnode and container, as can't modify properties of textnode directly
+    var container = document.createElement("span");
+    var text = document.createTextNode(text_str);
+    //style the container, and thus the text with it
+    container.style.fontSize = 40+"px";
+    container.appendChild(text);
+    container.appendChild(document.createElement("br")); // adding a line break
+    container.style.color = "red";
+    // add it to the link viewer
+    linkViewer.appendChild(container);
+}
+
 function inCircle(A,B, point) {
     /**
      * A,B- coordinates of the center of the circle 
@@ -83,11 +101,8 @@ function inCircle(A,B, point) {
     
 }
 
-function printLinks(X,Y) {
-    // remove all children from link viewer
-    while (linkViewer.firstChild) {
-        linkViewer.removeChild(linkViewer.firstChild);
-    }
+function printLinks(X,Y) {    
+    clearLinkViewerNodes()
     // TODO : optimise this! this makes it very slow since were calculating it every time.
     jQuery.each(elements,function (index,item) {
         if (!$(item).is(":visible")) return;    
@@ -107,13 +122,7 @@ function printLinks(X,Y) {
             console.log($(item).text(), "in circle:", partInCircle)
             
             if(partInCircle){
-                var container = document.createElement("span");
-                var text = document.createTextNode($(item).text());
-                container.style.fontSize = 40+"px";
-                container.appendChild(text);
-                container.appendChild(document.createElement("br")); // adding a line break
-                container.style.color = "red";
-                linkViewer.appendChild(container);
+                addTextToLinkViewer($(item).text());
             }
         }
     });    
