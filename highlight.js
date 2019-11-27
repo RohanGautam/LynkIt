@@ -60,11 +60,12 @@ function mhStyleMouseHighlight() {
 
 function linkViewerStyling() {
     linkViewer.style.position = 'absolute';
-    linkViewer.style.backgroundColor = '#000000'; // FF for transparency
+    linkViewer.style.backgroundColor = '#191970'; // FF for transparency
+    linkViewer.style.padding = "10px"
     // linkViewer.style.width = `${circleDiameter}px`;
     // linkViewer.style.height = `${circleDiameter}px`;
     linkViewer.style.opacity = 1;
-    linkViewer.style.borderRadius = `2px`;
+    linkViewer.style.borderRadius = `20px`;
     // linkViewer.style.borderColor = "#000000"
     linkViewer.style.zIndex = '999999';
     linkViewer.style.pointerEvents = 'none';
@@ -78,6 +79,8 @@ function clearLinkViewerNodes() {
 }
 
 function addTextToLinkViewer(text_str) {
+    var index  = (linkViewer.childElementCount +1) + ". ";
+    text_str = index+text_str;
     // create a textnode and container, as can't modify properties of textnode directly
     var container = document.createElement("span");
     var text = document.createTextNode(text_str);
@@ -85,7 +88,7 @@ function addTextToLinkViewer(text_str) {
     container.style.fontSize = 40+"px";
     container.appendChild(text);
     container.appendChild(document.createElement("br")); // adding a line break
-    container.style.color = "red";
+    container.style.color = "#FFFFFF";
     // add it to the link viewer
     linkViewer.appendChild(container);
 }
