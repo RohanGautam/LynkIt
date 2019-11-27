@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     var checkPageButton = document.getElementById('clickIt');
     $(document).ready(function () {
-        // TODO: face selected every time clicked again... how do I remember?
+        // TODO: face selected every time clicked again... how do I remember what it was before?
         $('input:radio[name=selectionMechanism]').change(function () {
             if (this.value == 'keyboard') {
                 keyboardUseHandler()
