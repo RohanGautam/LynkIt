@@ -19,7 +19,9 @@ linkViewerStyling();
 document.getElementsByTagName('body')[0].appendChild(linkViewer);
 var linkViewerItems = []
 
-/** Block of code below to capture keystrokes and follow that link */
+/** Block of code below to capture keystrokes and follow that link
+ * Keydown might be removed in future - just for proof of concept and usage visualisation
+ */
 window.addEventListener('keyup', doKeyPress, false); //add the keyboard handler
 var keycodes = {1:49, 2:50, 3:51, 4:52, 5:53, 6:54, 7:55, 8:56, 9:57};
 function doKeyPress(e){
