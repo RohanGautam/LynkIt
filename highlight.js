@@ -2,6 +2,7 @@
 Inspect console of page it's currently deployed in.
 Run `example.html` to see a bare-bones action
 */
+
 document.onmousemove = mhHandleMouseMove;
 
 var circleRadius = 50; // adjust this to set radius of region
@@ -16,6 +17,25 @@ var linkViewer = document.createElement('div');
 linkViewer.id = 'tooltip';
 linkViewerStyling();
 document.getElementsByTagName('body')[0].appendChild(linkViewer);
+var linkViewerItems = []
+
+/** Block of code below to capture keystrokes and follow that link */
+window.addEventListener('keyup', doKeyPress, false); //add the keyboard handler
+var keycodes = {1:49, 2:50, 3:51, 4:52, 5:53, 6:54, 7:55, 8:56, 9:57};
+function doKeyPress(e){
+    var linkViewerLen = linkViewer.childElementCount // return index based len
+    // do something only if linkviewer is currently showing stuff
+	if ( linkViewerLen != 0 ){
+        // TODO : what if >9 links in the region? hmmmmmm
+		for (key in keycodes){
+            if(key<=linkViewerLen && (e.keyCode == keycodes[key])){
+                var item = linkViewerItems[key-1];
+                // alert($(item).text() + " clicked"); // clicking takes to new instance of page, so console.log cant be seen. Hence, I used alert here for debugging
+                item.click();                
+            }
+        }
+	}
+}
 
 elements=[]
 $(document).ready(function(){
@@ -76,9 +96,12 @@ function clearLinkViewerNodes() {
     while (linkViewer.firstChild) {
         linkViewer.removeChild(linkViewer.firstChild);
     }
+    linkViewerItems = []
 }
 
-function addTextToLinkViewer(text_str) {
+function addItemTextToLinkViewer(item) {
+    text_str = $(item).text();
+    linkViewerItems.push(item);
     var index  = (linkViewer.childElementCount +1) + ". ";
     text_str = index+text_str;
     // create a textnode and container, as can't modify properties of textnode directly
@@ -164,16 +187,9 @@ function printLinks(X,Y) {
 
             partInCircle =  coordsInCircle(X, Y, coords)
             // console.log(this, "left:",x, "right",x + w,"top", y, "bottom",y + h);
-            console.log($(item).text(), "in circle:", partInCircle, " coords : ", coords)
-            
+            // console.log($(item).text(), "in circle:", partInCircle, " coords : ", coords)
             if(partInCircle){
-                text_str = $(item).text();
-
-                // //example of programatic clicking
-                // if(text_str=="Link 1"){
-                //     item.click();
-                // }
-                addTextToLinkViewer(text_str);
+                addItemTextToLinkViewer(item);
             }
         }
     });    
