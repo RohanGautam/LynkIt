@@ -2,65 +2,6 @@
 Inspect console of page it's currently deployed in.
 Run `example.html` to see a bare-bones action
 */
-
-// $("#start_select").click(function () {
-//     $("#select_canvas").show();
-// });
-
-// $('*').bind('selectstart', false);
-
-// var start = null;
-// var ctx = $("#select_canvas").get(0).getContext('2d');
-// ctx.globalAlpha = 0.5;
-
-// $("#select_canvas").mousedown(function (e) {
-//     start = [e.offsetX, e.offsetY];
-
-// }).mouseup(function (e) {
-//     end = [e.offsetX, e.offsetY];
-
-//     var x1 = Math.min(start[0], end[0]),
-//         x2 = Math.max(start[0], end[0]),
-//         y1 = Math.min(start[1], end[1]),
-//         y2 = Math.max(start[1], end[1]);
-
-//     var grabbed = [];
-//     $('*').each(function () {
-//         if (!$(this).is(":visible")) return;
-
-//         var o = $(this).offset(),
-//             x = o.left,
-//             y = o.top,
-//             w = $(this).width(),
-//             h = $(this).height();
-
-//         console.log(this, x, x + w, y, y + h);
-//         console.log(x1, x2, y1, y2);
-//         if (x > x1 && x + w < x2 && y > y1 && y + h < y2) {
-//             grabbed.push(this);
-//         }
-//     });
-//     console.log(grabbed);
-
-//     start = null;
-
-//     $(this).hide();
-
-// }).mousemove(function (e) {
-//     if (!start) return;
-
-//     ctx.clearRect(0, 0, this.offsetWidth, this.offsetHeight);
-//     ctx.beginPath();
-
-//     var x = e.offsetX,
-//         y = e.offsetY;
-
-//     ctx.rect(start[0], start[1], x - start[0], y - start[1]);
-//     ctx.fill();
-// });
-
-
-
 document.onmousemove = mhHandleMouseMove;
 
 var circleRadius = 50; // adjust this to set radius of region
@@ -71,7 +12,12 @@ mhNewPointer.id = 'mouse';
 mhStyleMouseHighlight();
 document.getElementsByTagName('body')[0].appendChild(mhNewPointer);
 
-var elements=[];
+var linkViewer = document.createElement('div');
+linkViewer.id = 'tooltip';
+linkViewerStyling();
+document.getElementsByTagName('body')[0].appendChild(linkViewer);
+
+elements=[]
 $(document).ready(function(){
     $('*').each(function () {
         if (!$(this).is(":visible")) return;    
@@ -108,6 +54,18 @@ function mhStyleMouseHighlight() {
     mhNewPointer.style.pointerEvents = 'none';
 }
 
+function linkViewerStyling() {
+    linkViewer.style.position = 'absolute';
+    linkViewer.style.backgroundColor = '#000000';
+    linkViewer.style.width = `${circleDiameter}px`;
+    linkViewer.style.height = `${circleDiameter}px`;
+    linkViewer.style.opacity = 0.35;
+    linkViewer.style.borderRadius = `2px`;
+    linkViewer.style.borderColor = "#000000"
+    linkViewer.style.zIndex = '999999';
+    linkViewer.style.pointerEvents = 'none';
+}
+
 function inCircle(A,B, point) {
     /**
      * A,B- coordinates of the center of the circle 
@@ -120,6 +78,10 @@ function inCircle(A,B, point) {
 }
 
 function printLinks(X,Y) {
+    // remove all children from link viewer
+    while (linkViewer.firstChild) {
+        linkViewer.removeChild(linkViewer.firstChild);
+    }
     // TODO : optimise this! this makes it very slow since were calculating it every time.
     jQuery.each(elements,function (index,item) {
         if (!$(item).is(":visible")) return;    
@@ -132,25 +94,20 @@ function printLinks(X,Y) {
         var topRight = [x+w,y]
         var bottomLeft = [x,y+h]
         var bottomRight = [x+w, y+h]
+
         if ($(item).is("a")) { 
             partInCircle =  inCircle(X,Y,topLeft) || inCircle(X,Y,topRight) || inCircle(X,Y,bottomLeft) || inCircle(X,Y,bottomRight)
             // console.log(this, "left:",x, "right",x + w,"top", y, "bottom",y + h);
+            console.log($(item).text(), "in circle:", partInCircle)
+            
             if(partInCircle){
-                console.log($(item).text(), "in circle:", partInCircle)
-                console.log("------")
+                var container = document.createElement("span");
+                var text = document.createTextNode($(item).text());
+                container.appendChild(text);
+                container.appendChild(document.createElement("br")); // adding a line break
+                container.style.color = "red";
+                linkViewer.appendChild(container);
             }
         }
     });    
 }
-
-
-// var html = document.body
-
-// var $html = jQuery(html);
-
-// var links = [];
-// $html.find('a').each(function(){
-//     console.log(this);      
-//     console.log(this.href);
-//     //links.push(this.href); 
-// });
