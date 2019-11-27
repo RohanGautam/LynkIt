@@ -37,6 +37,12 @@ function mhHandleMouseMove(event) {
     // console.log("X: "+newX+" Y:"+newX)
     mhNewPointer.style.left = newX + 'px';
     mhNewPointer.style.top = newY + 'px';
+    // for the link viewer:
+    newX = X + circleRadius;
+    newY = Y + circleRadius;
+    // console.log("X: "+newX+" Y:"+newX)
+    linkViewer.style.left = newX + 'px';
+    linkViewer.style.top = newY + 'px';
 
     printLinks(X, Y);
 }
@@ -56,12 +62,12 @@ function mhStyleMouseHighlight() {
 
 function linkViewerStyling() {
     linkViewer.style.position = 'absolute';
-    linkViewer.style.backgroundColor = '#000000';
-    linkViewer.style.width = `${circleDiameter}px`;
-    linkViewer.style.height = `${circleDiameter}px`;
-    linkViewer.style.opacity = 0.35;
+    linkViewer.style.backgroundColor = '#000000'; // FF for transparency
+    // linkViewer.style.width = `${circleDiameter}px`;
+    // linkViewer.style.height = `${circleDiameter}px`;
+    linkViewer.style.opacity = 1;
     linkViewer.style.borderRadius = `2px`;
-    linkViewer.style.borderColor = "#000000"
+    // linkViewer.style.borderColor = "#000000"
     linkViewer.style.zIndex = '999999';
     linkViewer.style.pointerEvents = 'none';
 }
@@ -103,6 +109,7 @@ function printLinks(X,Y) {
             if(partInCircle){
                 var container = document.createElement("span");
                 var text = document.createTextNode($(item).text());
+                container.style.fontSize = 40+"px";
                 container.appendChild(text);
                 container.appendChild(document.createElement("br")); // adding a line break
                 container.style.color = "red";
