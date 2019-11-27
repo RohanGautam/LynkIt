@@ -5,8 +5,8 @@ An extension that aids in link selection(links can be small and cluttered) by hi
 Might be used with mouse-to-joystick concept or standalone.
 
 
-
 # References
 * [Mouse highlighter](https://github.com/codazoda/mouse-highlighter)
 * [Hexadecimal codes for transparency](https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4)
 * [Add color dynamically to added text](https://stackoverflow.com/questions/22672131/add-color-dynamically-to-added-text)
+* <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
