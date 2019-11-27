@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
     var checkPageButton = document.getElementById('clickIt');
     $(document).ready(function () {
+        // TODO: face selected every time clicked again... how do I remember?
         $('input:radio[name=selectionMechanism]').change(function () {
             if (this.value == 'keyboard') {
                 keyboardUseHandler()
             }
             else if (this.value == 'face') {
-                alert("face pressed");
+                console.log("face pressed");
             }
         });
     });
@@ -21,5 +22,7 @@ function keyboardUseHandler() {
     chrome.tabs.query(query, function (tabs) {
         background.main(tabs[0]);
     });
-    window.close();// to close the popup on click of this button - dont do it if using popup window for something.
+    setTimeout(function(){
+        window.close();// to close the popup on click of this button - dont do it if using popup window for something.
+    }, 400); // delay in ms
 }

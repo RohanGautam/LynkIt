@@ -3,21 +3,30 @@
     <head>
         <title>LynkIt popup</title>
     </head>
+    <link rel="stylesheet" href="external/materialize.min.css">
     <style type="text/css">
 	body {
-            margin: 5px;
-        }
-	h1 {
-	    font-size: 15px;
-	    text-align: center;
-        }
+        margin: 5px;
+        text-align: center;
+    }
+    font{
+        font-size: 40px;
+    }
     </style>
+
     <body>
         <h1>LynkIt</h1>
-        <button id="clickIt">Click</button>
-
-        <input type="radio" name="selectionMechanism" id="keyboard"  value="keyboard">Keyboard
-        <input type="radio" name="selectionMechanism" id="face" checked="checked" value="face">Face
+        
+        <label for="keyboard" id = "radioButtons">
+            <input type="radio" name="selectionMechanism" id="keyboard"  value="keyboard">
+            <span><font>Keyboard</font></span>
+        </label>
+        <br>
+        <br>
+        <label for="face" id = "radioButtons">
+            <input type="radio" name="selectionMechanism" id="face" checked="checked" value="face">
+            <span><font>Face</font></span>
+        </label>
 
     </body>
     <script src="external/jquery-3.4.1.min.js"></script>
