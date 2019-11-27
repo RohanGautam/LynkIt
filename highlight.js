@@ -90,6 +90,28 @@ function addTextToLinkViewer(text_str) {
     linkViewer.appendChild(container);
 }
 
+function getCoordsToCheck(x, y, w, h) {
+    // basic points to check
+    var topLeft = [x,y];
+    var topRight = [x+w,y];
+    var bottomLeft = [x,y+h];
+    var bottomRight = [x+w, y+h];
+    coords = [topLeft, topRight, bottomLeft, bottomRight];
+    return coords;
+}
+
+function coordsInCircle(X, Y, coords) {
+    for (var  i = 0; i< coords.length; i+=1){
+        coord = coords[i];
+        // if any point is in the circle:
+        if(inCircle(X,Y,coord)==true){
+            return true;
+        }
+    }
+    return false;    
+}
+
+
 function inCircle(A,B, point) {
     /**
      * A,B- coordinates of the center of the circle 
@@ -106,20 +128,18 @@ function printLinks(X,Y) {
     // TODO : optimise this! this makes it very slow since were calculating it every time.
     jQuery.each(elements,function (index,item) {
         if (!$(item).is(":visible")) return;    
-        var o = $(item).offset(),
-            x = o.left,
-            y = o.top,
-            w = $(item).width(),
-            h = $(item).height();
-        var topLeft = [x,y]
-        var topRight = [x+w,y]
-        var bottomLeft = [x,y+h]
-        var bottomRight = [x+w, y+h]
-
+        
         if ($(item).is("a")) { 
-            partInCircle =  inCircle(X,Y,topLeft) || inCircle(X,Y,topRight) || inCircle(X,Y,bottomLeft) || inCircle(X,Y,bottomRight)
+            var o = $(item).offset(),
+                x = o.left,
+                y = o.top,
+                w = $(item).width(),
+                h = $(item).height();            
+            coords = getCoordsToCheck(x, y, w, h); // will include more points if longer element
+
+            partInCircle =  coordsInCircle(X, Y, coords)
             // console.log(this, "left:",x, "right",x + w,"top", y, "bottom",y + h);
-            console.log($(item).text(), "in circle:", partInCircle)
+            console.log($(item).text(), "in circle:", partInCircle, " coords : ", coords)
             
             if(partInCircle){
                 text_str = $(item).text();
