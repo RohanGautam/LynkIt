@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Click It</title>
+        <title>LynkIt popup</title>
     </head>
     <style type="text/css">
 	body {
@@ -13,8 +13,13 @@
         }
     </style>
     <body>
-        <h1>Click It.</h1>
+        <h1>LynkIt</h1>
         <button id="clickIt">Click</button>
+
+        <input type="radio" name="selectionMechanism" id="keyboard"  value="keyboard">Keyboard
+        <input type="radio" name="selectionMechanism" id="face" checked="checked" value="face">Face
+
     </body>
+    <script src="external/jquery-3.4.1.min.js"></script>
     <script src="popup.js"></script>
 </html>
