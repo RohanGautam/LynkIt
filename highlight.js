@@ -122,7 +122,13 @@ function printLinks(X,Y) {
             console.log($(item).text(), "in circle:", partInCircle)
             
             if(partInCircle){
-                addTextToLinkViewer($(item).text());
+                text_str = $(item).text();
+
+                // //example of programatic clicking
+                // if(text_str=="Link 1"){
+                //     item.click();
+                // }
+                addTextToLinkViewer(text_str);
             }
         }
     });    
