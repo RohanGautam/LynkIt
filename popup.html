@@ -15,10 +15,26 @@
     font{
         font-size: 40px;
     }
+    #container {
+        margin: 10px auto;
+        width: 520px;
+        height: 395px;
+        border: 10px #333 solid;
+    }
+    #videoElement {
+        width: 500px;
+        height: 375px;
+        background-color: #666;
+    }
+
     </style>
     <!-- body -->
     <body>
         <h1>LynkIt</h1>
+        <div id="container">
+            <video autoplay="true" id="videoElement">	
+            </video>
+        </div>
         
         <label for="keyboard" id = "radioButtons">
             <input type="radio" name="selectionMechanism" id="keyboard"  value="keyboard">
