@@ -14,3 +14,5 @@ Might be used with mouse-to-joystick concept or standalone.
 * [Close popup when button in it clicked](https://stackoverflow.com/questions/13207129/close-a-chrome-extension-popup-by-clicking-the-browser-action-icon-again)
 * [Getting current tab from popup](https://stackoverflow.com/questions/13359421/chrome-extension-get-current-tab-from-popup)
 * [Call background from popup](https://stackoverflow.com/questions/21146457/chrome-extension-getbackgroundpage-function-example)
+* [This repo](https://github.com/PAIR-code/cam-scroller) for camera and image - related help
+* Check out [browcam](https://github.com/sbraaten95/browCam) for draggable camera in the main interacting page itself, instead of a popup. Can be a future feature maybe?
