@@ -16,5 +16,4 @@ Might be used with mouse-to-joystick concept or standalone.
 * [Call background from popup](https://stackoverflow.com/questions/21146457/chrome-extension-getbackgroundpage-function-example)
 * [This repo](https://github.com/PAIR-code/cam-scroller) for camera and image - related help
 * Check out [browcam](https://github.com/sbraaten95/browCam) for draggable camera in the main interacting page itself, instead of a popup. Can be a future feature maybe?
-
-https://github.com/auduno/clmtrackr for face detection?
+* [clmtrackr](https://github.com/auduno/clmtrackr) for face detection, with major help from demo example at [clmtrackr-demo, on glitch](https://glitch.com/~clmtrackr-demo)
