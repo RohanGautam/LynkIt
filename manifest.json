@@ -14,5 +14,6 @@
         "storage"
     ],
     "version": "16.11.24",
-    "manifest_version": 2
+    "manifest_version": 2,
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
 }
