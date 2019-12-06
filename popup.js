@@ -11,10 +11,16 @@ var eyeContext = eyeCanvas.getContext('2d');
 var bwCanvas = document.getElementById('bwCanvas');
 var bwContext = bwCanvas.getContext('2d');
 // threshold canvas and context
-thCanvas = document.getElementById('thCanvas');
-thContext = thCanvas.getContext('2d');
+var thCanvas = document.getElementById('thCanvas');
+var thContext = thCanvas.getContext('2d');
+// old canvas and context
+oldCanvas = document.getElementById('oldCanvas');
+oldContext = oldCanvas.getContext('2d');
+// cur canvas and context
+curCanvas = document.getElementById('curCanvas');
+curContext = curCanvas.getContext('2d');
 
-var eyeRect;
+var eyeRect, interval, oldData, curData;
 var settings = {
     contrast: 3,
     brightness: 0.5,
@@ -72,6 +78,7 @@ function initialSetup() {
         w: 0,
         h: 0,
     };
+    interval = setInterval(correlation, 100);
 }
 
 vid.addEventListener('canplay', enablestart, false);
@@ -96,6 +103,14 @@ function adjustVideoProportions() {
     vid_width = Math.round(vid_height * proportion);
     vid.width = vid_width;
     trackerCanvas.width = vid_width;
+}
+
+function correlation() {
+    if (curData) {
+        oldData = curData;
+    }
+
+    curData = thContext.getImageData(0, 0, thContext.canvas.width, thContext.canvas.height);
 }
 
 function gumSuccess(stream) {
@@ -140,6 +155,8 @@ function drawLoop() {
     eyeContext.clearRect(0, 0, eyeContext.canvas.width, eyeContext.canvas.height);
     bwContext.clearRect(0, 0, bwContext.canvas.width, bwContext.canvas.height);
     thContext.clearRect(0, 0, thContext.canvas.width, thContext.canvas.height);
+    oldContext.clearRect(0, 0, oldContext.canvas.width, oldContext.canvas.height);
+    curContext.clearRect(0, 0, curContext.canvas.width, curContext.canvas.height);
 
     if (ctrack.getCurrentPosition()) {
         // get points
@@ -163,5 +180,15 @@ function drawLoop() {
         var grayscale = CanvasFilters.grayscale(data, settings.contrast, settings.brightness);
         var threshold = CanvasFilters.threshold(grayscale, settings.threshold);
         thContext.putImageData(threshold, 0, 0);
+        
+        // draw old data set
+        if (oldData) {
+            oldContext.putImageData(oldData, 0, 0);
+        }
+
+        // draw cur data set
+        if (curData) {
+            curContext.putImageData(curData, 0, 0);
+        }
     }
 }
