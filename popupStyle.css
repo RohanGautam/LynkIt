@@ -37,7 +37,16 @@ canvas {
     top: 0px;
     left: 0px;
     border: 1px solid black;
-    /* background: #333; */
+    /* background hides eye canvas */
+    background: #333; 
+}
+#thCanvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 1px solid black;
+    /* background hides eye canvas */
+    background: rgb(46, 45, 45); 
 }
 
 #videoElement {

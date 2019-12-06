@@ -1,17 +1,24 @@
 var vid = document.getElementById('videoElement');
 var vid_width = vid.width;
 var vid_height = vid.height;
+// tracker canvas and context
 var trackerCanvas = document.getElementById('trackerCanvas');
 var trackerContext = trackerCanvas.getContext('2d');
+// eye canvas and context
 var eyeCanvas = document.getElementById('eyeCanvas');
 var eyeContext = eyeCanvas.getContext('2d');
+// black and white canvas and context
 var bwCanvas = document.getElementById('bwCanvas');
-var bwContext = eyeCanvas.getContext('2d');
+var bwContext = bwCanvas.getContext('2d');
+// threshold canvas and context
+thCanvas = document.getElementById('thCanvas');
+thContext = thCanvas.getContext('2d');
 
 var eyeRect;
 var settings = {
     contrast: 3,
     brightness: 0.5,
+    threshold: 80,
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -131,6 +138,9 @@ function drawLoop() {
     requestAnimFrame(drawLoop);
     trackerContext.clearRect(0, 0, vid_width, vid_height);
     eyeContext.clearRect(0, 0, eyeContext.canvas.width, eyeContext.canvas.height);
+    bwContext.clearRect(0, 0, bwContext.canvas.width, bwContext.canvas.height);
+    thContext.clearRect(0, 0, thContext.canvas.width, thContext.canvas.height);
+
     if (ctrack.getCurrentPosition()) {
         // get points
         var positions = ctrack.getCurrentPosition();
@@ -147,5 +157,11 @@ function drawLoop() {
         var data = CanvasFilters.getPixels(eyeCanvas);
         var grayscale = CanvasFilters.grayscale(data, settings.contrast, settings.brightness);
         bwContext.putImageData(grayscale, 0, 0);
+        
+        // threshold
+        var data = CanvasFilters.getPixels(eyeCanvas);
+        var grayscale = CanvasFilters.grayscale(data, settings.contrast, settings.brightness);
+        var threshold = CanvasFilters.threshold(grayscale, settings.threshold);
+        thContext.putImageData(threshold, 0, 0);
     }
 }
