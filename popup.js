@@ -1,14 +1,18 @@
 var vid = document.getElementById('videoElement');
 var vid_width = vid.width;
 var vid_height = vid.height;
-var overlay = document.getElementById('overlay');
-var overlayCC = overlay.getContext('2d');
+var trackerCanvas = document.getElementById('trackerCanvas');
+var trackerContext = trackerCanvas.getContext('2d');
+var eyeCanvas = document.getElementById('eyeCanvas');
+var eyeContext = eyeCanvas.getContext('2d');
+
+var eyeRect;
 
 document.addEventListener('DOMContentLoaded', function () {
     var checkPageButton = document.getElementById('clickIt');
     $(document).ready(function () {
         // For the video feed
-        setupCam() // delay in ms
+        initialSetup() // delay in ms
         //For the radio buttons
         var firstVal = $('input:radio[name=selectionMechanism]:checked').val();
         console.log(firstVal);
@@ -45,6 +49,18 @@ function setupCam() {
     });
 }
 
+function initialSetup() {
+    // Set up the camera
+    setupCam();
+    // initialize eye rect
+    eyeRect = {
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+    };
+}
+
 vid.addEventListener('canplay', enablestart, false);
 document.getElementById("startbutton").addEventListener("click", startVideo);
 
@@ -57,6 +73,7 @@ function enablestart() {
     var startbutton = document.getElementById('startbutton');
     startbutton.value = "start";
     startbutton.disabled = null;
+    startVideo() // TODO: remove this, it's for debugging
 }
 
 function adjustVideoProportions() {
@@ -65,7 +82,7 @@ function adjustVideoProportions() {
     var proportion = vid.videoWidth / vid.videoHeight;
     vid_width = Math.round(vid_height * proportion);
     vid.width = vid_width;
-    overlay.width = vid_width;
+    trackerCanvas.width = vid_width;
 }
 
 function gumSuccess(stream) {
@@ -106,21 +123,18 @@ function startVideo() {
 
 function drawLoop() {
     requestAnimFrame(drawLoop);
-    overlayCC.clearRect(0, 0, vid_width, vid_height);
+    trackerContext.clearRect(0, 0, vid_width, vid_height);
+    eyeContext.clearRect(0, 0, eyeContext.canvas.width, eyeContext.canvas.height);
     if (ctrack.getCurrentPosition()) {
         // get points
         var positions = ctrack.getCurrentPosition();
-        ctrack.draw(overlay);
+        ctrack.draw(trackerCanvas);
 
-        var pupilLeft = positions[27];
-        var pupilRight = positions[32];
+        eyeRect.x = positions[23][0];
+        eyeRect.y = positions[24][1];
+        eyeRect.w = positions[25][0] - positions[23][0];
+        eyeRect.h = positions[26][1] - positions[24][1];
 
-        // draw circles over eyes
-        overlayCC.fillStyle = '#faa732';
-        overlayCC.beginPath();
-        overlayCC.arc(pupilLeft[0], pupilLeft[1], 20, 0, Math.PI * 2, true);
-        overlayCC.arc(pupilRight[0], pupilRight[1], 20, 0, Math.PI * 2, true);
-        overlayCC.closePath();
-        overlayCC.fill();
+        eyeContext.drawImage(trackerCanvas, eyeRect.x, eyeRect.y, eyeRect.w, eyeRect.h, 0, 0, eyeContext.canvas.width, eyeContext.canvas.height)
     }
 }

@@ -7,7 +7,7 @@ body {
     text-align: center;
 }
 
-#overlay {
+#trackerCanvas {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -20,6 +20,13 @@ body {
     /*IE*/
     filter: fliph;
     /*IE*/
+}
+#eyeCanvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 1px solid black;
+    background: #333;
 }
 
 #videoElement {
