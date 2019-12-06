@@ -5,8 +5,14 @@ var trackerCanvas = document.getElementById('trackerCanvas');
 var trackerContext = trackerCanvas.getContext('2d');
 var eyeCanvas = document.getElementById('eyeCanvas');
 var eyeContext = eyeCanvas.getContext('2d');
+var bwCanvas = document.getElementById('bwCanvas');
+var bwContext = eyeCanvas.getContext('2d');
 
 var eyeRect;
+var settings = {
+    contrast: 3,
+    brightness: 0.5,
+};
 
 document.addEventListener('DOMContentLoaded', function () {
     var checkPageButton = document.getElementById('clickIt');
@@ -136,5 +142,10 @@ function drawLoop() {
         eyeRect.h = positions[26][1] - positions[24][1];
 
         eyeContext.drawImage(trackerCanvas, eyeRect.x, eyeRect.y, eyeRect.w, eyeRect.h, 0, 0, eyeContext.canvas.width, eyeContext.canvas.height)
+
+        // black and white
+        var data = CanvasFilters.getPixels(eyeCanvas);
+        var grayscale = CanvasFilters.grayscale(data, settings.contrast, settings.brightness);
+        bwContext.putImageData(grayscale, 0, 0);
     }
 }

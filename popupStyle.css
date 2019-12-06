@@ -7,6 +7,10 @@ body {
     text-align: center;
 }
 
+canvas {
+    border: 1px solid black;
+}
+
 #trackerCanvas {
     position: absolute;
     top: 0px;
@@ -27,6 +31,13 @@ body {
     left: 0px;
     border: 1px solid black;
     background: #333;
+}
+#bwCanvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 1px solid black;
+    /* background: #333; */
 }
 
 #videoElement {
