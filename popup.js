@@ -14,17 +14,27 @@ var bwContext = bwCanvas.getContext('2d');
 var thCanvas = document.getElementById('thCanvas');
 var thContext = thCanvas.getContext('2d');
 // old canvas and context
-oldCanvas = document.getElementById('oldCanvas');
-oldContext = oldCanvas.getContext('2d');
+var oldCanvas = document.getElementById('oldCanvas');
+var oldContext = oldCanvas.getContext('2d');
 // cur canvas and context
-curCanvas = document.getElementById('curCanvas');
-curContext = curCanvas.getContext('2d');
+var curCanvas = document.getElementById('curCanvas');
+var curContext = curCanvas.getContext('2d');
+// correlation canvas and context
+var cCanvas = document.getElementById('cCanvas');
+var cContext = cCanvas.getContext('2d');
 
-var eyeRect, interval, oldData, curData;
+// correlation percentage dom
+var correlationPercentage = document.getElementById('correlationPercentage');
+
+// blinks detected dom
+var blinksDetected = document.getElementById('blinksDetected');
+
+var eyeRect, interval, oldData, curData, cData, currentCorrelation, blinks;
 var settings = {
     contrast: 3,
     brightness: 0.5,
     threshold: 80,
+    minCorrelation: 0.35, // if x% of the current data set is different from the previous data set, we have a substantially different image, and therefore we can conclude that a blink occurred.
 };
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -78,7 +88,8 @@ function initialSetup() {
         w: 0,
         h: 0,
     };
-    interval = setInterval(correlation, 100);
+    interval = setInterval(correlation, 150);
+    blinks = 0;
 }
 
 vid.addEventListener('canplay', enablestart, false);
@@ -111,6 +122,30 @@ function correlation() {
     }
 
     curData = thContext.getImageData(0, 0, thContext.canvas.width, thContext.canvas.height);
+    // correlation data
+    cData = cContext.createImageData(cContext.canvas.width, cContext.canvas.height);
+
+    var count = 0;
+    if (oldData && curData) {
+        var total = curData.data.length;
+        for (var i = 0; i < total; i += 4) {
+            cData.data[i + 3] = 255;
+            if (curData.data[i] !== oldData.data[i]) {
+                cData.data[i] = 255;
+                count++;
+            }
+        }
+    }
+
+    currentCorrelation = count / (cContext.canvas.width * cContext.canvas.height);
+
+    correlationPercentage.innerHTML = parseFloat(currentCorrelation).toFixed(2) + '%';
+
+    if (currentCorrelation > settings.minCorrelation) {
+        blinks++;
+    }
+
+    blinksDetected.innerHTML = blinks + ' blinks detected';
 }
 
 function gumSuccess(stream) {
@@ -157,6 +192,7 @@ function drawLoop() {
     thContext.clearRect(0, 0, thContext.canvas.width, thContext.canvas.height);
     oldContext.clearRect(0, 0, oldContext.canvas.width, oldContext.canvas.height);
     curContext.clearRect(0, 0, curContext.canvas.width, curContext.canvas.height);
+    cContext.clearRect(0, 0, cContext.canvas.width, cContext.canvas.height);
 
     if (ctrack.getCurrentPosition()) {
         // get points
