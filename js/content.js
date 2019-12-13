@@ -14,11 +14,17 @@ function checkChoice() {
         if (items.selectionMechanism == "keyboard") {
             highlight()
         }
-        else{
-            //todo: remove highlight
+        else if (items.selectionMechanism == "null") {
+            //remove highlight
+            removeHighlight()
         }
     });
 }
+
+var mhNewPointer = document.createElement('div');
+mhNewPointer.id = 'mouse';
+var linkViewer = document.createElement('div');
+linkViewer.id = 'tooltip';
 
 function highlight() {
     /*
@@ -31,13 +37,9 @@ Run `example.html` to see a bare-bones action
     var circleRadius = 50; // adjust this to set radius of region
     var circleDiameter = circleRadius * 2;
     /* Draw a div */
-    var mhNewPointer = document.createElement('div');
-    mhNewPointer.id = 'mouse';
     mhStyleMouseHighlight();
     document.getElementsByTagName('body')[0].appendChild(mhNewPointer);
 
-    var linkViewer = document.createElement('div');
-    linkViewer.id = 'tooltip';
     linkViewerStyling();
     document.getElementsByTagName('body')[0].appendChild(linkViewer);
     var linkViewerItems = []
@@ -219,4 +221,9 @@ Run `example.html` to see a bare-bones action
             }
         });
     }
+}
+
+function removeHighlight() {
+    mhNewPointer.style.opacity = 0.00;
+    linkViewer.style.opacity = 0.00;
 }
