@@ -6,14 +6,14 @@
         "default_title": "LynkIt"
     },
     "name": "LynkIt",
-    "description": "LynkIt.",
+    "description": "Modern hyperlink navigation tool.",
     "permissions": [
         "tabs",
         "http://*/*",
         "https://*/*",
         "storage"
     ],
-    "version": "16.11.24",
+    "version": "1.0.0",
     "manifest_version": 2,
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "content_scripts": [
