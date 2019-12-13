@@ -1,25 +1,30 @@
 chrome.runtime.onMessage.addListener(
+    // for tabs already open, to check again and again
     function (request, sender, sendResponse) {
         if (request.checkChoice == true) {
-            alert('got message ' + request.checkChoice)
+            // alert('got message ' + request.checkChoice)
             checkChoice()
         }
     }
 );
 
+checkChoice() // initial checking
 function checkChoice() {
     chrome.storage.sync.get("selectionMechanism", function (items) {
         if (items.selectionMechanism == "keyboard") {
             highlight()
         }
+        else{
+            //todo: remove highlight
+        }
     });
 }
 
 function highlight() {
-        /*
-    Inspect console of page it's currently deployed in.
-    Run `example.html` to see a bare-bones action
-    */
+    /*
+Inspect console of page it's currently deployed in.
+Run `example.html` to see a bare-bones action
+*/
 
     document.onmousemove = mhHandleMouseMove;
 

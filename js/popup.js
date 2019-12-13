@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function () {
             if (this.value == 'keyboard') {
                 keyboardUseHandler()
             }
+            else{
+                // todo: disable highlighter
+            }
         });
     });
 }, false);
@@ -27,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function keyboardUseHandler() {
     storeUserSelectionChoice('keyboard');
-    alert('sending message')
-    chrome.tabs.query({}, function(tabs) {
-        var message = {"checkChoice": true};
-        for (var i=0; i<tabs.length; ++i) {
-            chrome.tabs.sendMessage(tabs[i].id, message);
-        }
-    });
+    // alert('sending message')
+    // chrome.tabs.query({}, function(tabs) {
+    //     var message = {"checkChoice": true};
+    //     for (var i=0; i<tabs.length; ++i) {
+    //         chrome.tabs.sendMessage(tabs[i].id, message);
+    //     }
+    // });
     // var background = chrome.extension.getBackgroundPage();
     // var query = { active: true, currentWindow: true };
     // chrome.tabs.query(query, function (tabs) {
@@ -52,6 +55,12 @@ function storeUserSelectionChoice(choice) {
     jsonfile[key] = val;
     chrome.storage.sync.set(jsonfile, function () {
         console.log('Saved', key, val);
+        chrome.tabs.query({}, function(tabs) {
+            var message = {"checkChoice": true};
+            for (var i=0; i<tabs.length; ++i) {
+                chrome.tabs.sendMessage(tabs[i].id, message);
+            }
+        });
     });
 }
 
