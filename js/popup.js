@@ -4,14 +4,20 @@ disableButton.addEventListener("click", disableExtension);
 
 function showDisableButton() {
     disableButton.style.display = "inline"; 
+    document.getElementById("extensionTitle").innerHTML = "LynkIt enabled!"; 
+    
 }
 function hideDisableButton() {
-    disableButton.style.display = "none"; 
+    disableButton.style.display = "none";
+    document.getElementById("extensionTitle").innerHTML = "LynkIt disabled"; 
+    document.getElementById("selectPrompt").innerHTML = "Select input mechanism:"; 
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     var checkPageButton = document.getElementById('clickIt');
     $(document).ready(function () {
+        //initially hide disable button
+        hideDisableButton()
         //For the radio buttons
         chrome.storage.sync.get("selectionMechanism", function (items) {
             console.log(items);            
