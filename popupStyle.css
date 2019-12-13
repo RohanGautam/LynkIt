@@ -3,101 +3,15 @@ body {
     font-family: 'Lato';
     background-color: #f0f0f0;
     margin: 0px auto;
+    padding: 10px;
     max-width: 1150px;
     text-align: center;
-}
-
-canvas {
-    border: 1px solid black;
-}
-
-#trackerCanvas {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 500px;
-    height: 375px;
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    -ms-filter: fliph;
-    /*IE*/
-    filter: fliph;
-    /*IE*/
-}
-#eyeCanvas {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border: 1px solid black;
-    background: #333;
-}
-#bwCanvas {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border: 1px solid black;
-    /* background hides eye canvas */
-    background: #333; 
-}
-#thCanvas {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border: 1px solid black;
-    /* background hides eye canvas */
-    background: rgb(46, 45, 45); 
-}
-
-#videoElement {
-    width: 500px;
-    height: 375px;
-    -o-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
-    -ms-filter: fliph;
-    /*IE*/
-    filter: fliph;
-    /*IE*/
-}
-
-#container {
-    position: relative;
-    margin: 10px auto;
-    width: 520px;
-    height: 395px;
-    border: 10px #333 solid;
-    /*margin : 0px auto;*/
-}
-
-#content {
-    margin-top: 70px;
-    margin-left: 100px;
-    margin-right: 100px;
-    max-width: 950px;
 }
 
 h2 {
     font-weight: 400;
 }
 
-.nogum {
-    display: none;
-}
-
 font {
     font-size: 40px;
-}
-
-/* .btn {
-    font-family: 'Lato';
-    font-size: 16px;
-    } */
-
-.hide {
-    display: none;
-}
-
-.nohide {
-    display: block;
 }

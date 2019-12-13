@@ -9,55 +9,16 @@
 
     <!-- body -->
     <body>
-        <h1>LynkIt</h1>
-        <div id="container">
-            <video id="videoElement" width="400" height="300" preload="auto" loop playsinline autoplay>
-            </video>
-            <canvas id="trackerCanvas" width="400" height="300"></canvas>
-            <canvas id="eyeCanvas" width=80 height=60></canvas>
-            <canvas id="bwCanvas" width=80 height=60></canvas>
-            <canvas id="thCanvas" width=80 height=60></canvas>
-            <br />
-            <canvas id="oldCanvas" width=80 height=60></canvas>
-            <canvas id="curCanvas" width=80 height=60></canvas>
-            <canvas id="cCanvas" width=80 height=60></canvas>
-            <br />
-            <p id="correlationPercentage">
-                0%
-            </p>
-            <p id="blinksDetected">
-                0
-            </p>
-        </div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <input class="btn" type="button" value="wait, loading video" disabled="disabled" id="startbutton"/>
-        <br/>
-        <br/>
-
+        <h1>LynkIt enabled!</h1>
+        <h5>Using input mechanism:</h2>
+        <br>
         <label for="keyboard" id = "radioButtons">
-            <input type="radio" name="selectionMechanism" id="keyboard"  value="keyboard">
+            <input type="radio" name="selectionMechanism" id="keyboard" checked="checked" value="keyboard">
             <span><font>Keyboard</font></span>
-        </label>
-        <br>
-        <br>
-        <label for="face" id = "radioButtons">
-            <input type="radio" name="selectionMechanism" id="face" checked="checked" value="face">
-            <span><font>Face</font></span>
         </label>
 
     </body>
     <!-- Javascript -->
     <script src="external/jquery-3.4.1.min.js"></script>
-    <script src="external/clmtrackr.js"></script>
-    <script src="external/utils.js"></script>
-    <script src="external/canvasfilters.js"></script>
     <script src="popup.js"></script>
 </html>
