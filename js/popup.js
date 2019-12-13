@@ -1,4 +1,13 @@
 // chrome.storage.sync.clear();
+disableButton = document.getElementById("disablebutton");
+disableButton.addEventListener("click", disableExtension);
+
+function showDisableButton() {
+    disableButton.style.display = "inline"; 
+}
+function hideDisableButton() {
+    disableButton.style.display = "none"; 
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     var checkPageButton = document.getElementById('clickIt');
@@ -8,7 +17,8 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log(items);            
             // alert('changing type')
             if (items.selectionMechanism == "keyboard") {
-                $('input[type="radio"]').prop('checked', true); 
+                $('input[type="radio"]').prop('checked', true);                      
+                showDisableButton()
             }
         });
         // var firstVal = $('input:radio[name=selectionMechanism]:checked').val();
@@ -17,11 +27,9 @@ document.addEventListener('DOMContentLoaded', function () {
         //     keyboardUseHandler();
         // }
         $('input:radio[name=selectionMechanism]').change(function () {
+            showDisableButton()
             if (this.value == 'keyboard') {
                 keyboardUseHandler()
-            }
-            else{
-                // todo: disable highlighter
             }
         });
     });
@@ -64,8 +72,8 @@ function storeUserSelectionChoice(choice) {
     });
 }
 
-document.getElementById("disablebutton").addEventListener("click", disableExtension);
 function disableExtension() {
     $('input[type="radio"]').prop('checked', false); 
+    hideDisableButton()   
     storeUserSelectionChoice("null")
 }
