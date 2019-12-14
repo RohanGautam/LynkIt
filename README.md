@@ -1,8 +1,14 @@
-# LynkIt
+# LynkIt <img src="https://user-images.githubusercontent.com/17317792/70845386-09ae6b80-1e89-11ea-88aa-25fe34579d2c.png" alt="LynkIt logo" width="100" height=""> 
+
 ## What am I trying to do?
 An extension that aids in link selection(links can be small and cluttered) by highlighting all the links around a certain region of the mouse(via a popup maybe?) and lets the user select which link, based on some selection mechanism(currently undecided - eye blinks, cpacitive touch, etc).
 
 Might be used with mouse-to-joystick concept or standalone.
+
+## Prototype screenshots
+* Using keyboard numpad to navigate into/click links in a given region:
+![lynkIt_1](https://user-images.githubusercontent.com/17317792/70845352-89880600-1e88-11ea-91e3-e7d8c9ddbb5e.png)
+![lynkIt_2](https://user-images.githubusercontent.com/17317792/70845353-8c82f680-1e88-11ea-912b-e9f3c27b29b0.png)
 
 
 # References
